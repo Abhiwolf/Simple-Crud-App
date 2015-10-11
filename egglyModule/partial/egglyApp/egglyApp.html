@@ -1,0 +1,68 @@
+<div class="col-md-12" ng-controller="EgglyappCtrl">
+    <div class="row">
+        <div class="col-sm-3 sidebar page-header">
+            <ul class="nav nav-sidebar">
+                <li>
+                    <a href="#" ng-click="setCurrentCategory(null)">View All Category</a>
+                </li>
+                <li ng-repeat="item in categories" ng-class="{'active' :isCurrentCategory(item)}"><a href="#" ng-click="setCurrentCategory(item)">{{item.name}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-8">
+            <h3>My App</h3>
+            <div ng-repeat="bookmark in bookmarks | filter:{category:currentategory.name}" class="bottom-gap">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <button class="btn btn-info btn-xs" ng-click="setEditedBookmark(bookmark);startEditing()"><i class="fa fa-pencil"></i>
+                        </button>
+                        <a href="{{bookmark.url}}" target="_blank">{{bookmark.title}}</a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="#" ng-click="deleteBookmark(bookmark, $index)"><i class="fa fa-times-circle"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="" ng-if="isCreating">
+                <a href="#" ng-click="startCreating()"><i class="fa fa-plus-circle" ></i> Create Bookmark</a>
+                <div class="" ng-if="isbookmarkcreating">
+                    <form class="" role="form" name="createForm" ng-submit="createBookmark(newBookmark)" novalidate>
+                        <div class="form-group">
+                            <label for="newBookmarkTitle">Bookmark Title</label>
+                            <input type="text" class="form-control" name="createTitle" id="newBookmarkTitle" ng-model="newBookmark.title" placeholder="Enter Title" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="newBookmarkUrl">Bookmark Url</label>
+                            <input type="text" name="createUrl" class="form-control" id="newBookmarkUrl" ng-model="newBookmark.url" placeholder="Enter Url" required/>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-sm pull-left" ng-disabled="createForm.createTitle.$invalid || createForm.createUrl.$invalid">Create</button>
+                        <button class="btn btn-warning btn-sm pull-right" ng-click="cancelCreating()">Cancel</button>
+                    </form>
+
+                </div>
+            </div>
+
+            <!--edit form-->
+            <div class="" ng-if="isEditing">
+                <div class="">
+                    <form class="" role="form" name="EditForm" ng-submit="updatebookmark(editedBookmark)" novalidate>
+                        <div class="form-group">
+                            <label>Bookmark Title</label>
+                            <input type="text" class="form-control" name="editTitle" ng-model="editedBookmark.title" placeholder="Enter Title" />
+                        </div>
+                        <div class="form-group">
+                            <label>Bookmark Url</label>
+                            <input type="text" name="editUrl" class="form-control" ng-model="editedBookmark.url" placeholder="Enter Url" />
+                        </div>
+                        <button type="submit" class="btn btn-success btn-sm pull-left">Update</button>
+                        <button class="btn btn-warning btn-sm pull-right" ng-click="cancelEditing()">Cancel</button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
